@@ -1,44 +1,298 @@
 {% load static %}
 <!DOCTYPE html>
-
+<html>
 <head>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
     <style>
-        .xyz{
-          margin-bottom: 0px;
-          background-image: url('{% static "image/homepage.jpg" %}');
-          background-size: cover;
-          background-repeat: no-repeat;
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
         }
-      </style>
-      
+
+        .xyz {
+            margin-bottom: 0px;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            height: 100vh;
+        }
+
+        .xyz::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 0;
+        }
+
+        .xyz video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            min-width: 100%;
+            min-height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+            color: white;
+            text-shadow: 2px 2px 5px #000;
+            animation: fadeIn 3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: bold;
+        }
+
+        p.lead {
+            font-size: 1.5rem;
+        }
+
+        .btn-check {
+            margin-top: 20px;
+            padding: 12px 25px;
+            background-color: #e60000;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-check:hover {
+            background-color: #cc0000;
+        }
+
+        .compatibility-form {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.97);
+            padding: 25px;
+            border-radius: 10px;
+            z-index: 999;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            width: 300px;
+        }
+
+        .compatibility-form select,
+        .compatibility-form button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 15px;
+            font-size: 1rem;
+        }
+
+        .compatibility-form h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .close-btn {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            float: right;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .section {
+            padding: 50px 20px;
+        }
+
+        .testimonial-card, .camp-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            max-width: 400px;
+        }
+
+        .testimonial-card h5 {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #e60000;
+        }
+
+        .gallery-img {
+            width: 250px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .gallery-img:hover {
+            transform: scale(1.05);
+        }
+    </style>
 </head>
 
-
 <body>
-  {% include "blood/navbar.html" %}
-<br>
-<section id="section-jumbotron" style="margin-bottom: 0px;" class="jumbotron jumbotron-fluid d-flex justify-content-center align-items-center xyz">
-    <div class="container text-center">
-        <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-     
-      
-      <br><br><br><br>
-      
-    </div>  
-  </section>
+    {% include "blood/navbar.html" %}
+    <br>
 
+    <section id="section-jumbotron" class="jumbotron jumbotron-fluid d-flex justify-content-center align-items-center xyz">
+        <video autoplay muted loop playsinline>
+            <source src="{% static 'video/blood1.mp4' %}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="container text-center content">
+            <h1>Welcome to the Blood Bank</h1>
+            <p class="lead">Donate Blood, Save Lives</p>
+            <br>
+            <button class="btn-check" onclick="document.getElementById('compatForm').style.display='block'">Check Compatibility</button>
+        </div>
+    </section>
 
-  <div class="jumbotron" style="margin-top: 0px;margin-bottom: 0px;">
+    <!-- Compatibility Form -->
+    <div id="compatForm" class="compatibility-form">
+        <button class="close-btn" onclick="document.getElementById('compatForm').style.display='none'">X</button>
+        <h3>Blood Compatibility Checker</h3>
+        <label>Donor Blood Group:</label>
+        <select id="donor">
+            <option value="">-- Select Donor Blood Group --</option>
+            <option>A+</option><option>A-</option>
+            <option>B+</option><option>B-</option>
+            <option>AB+</option><option>AB-</option>
+            <option>O+</option><option>O-</option>
+        </select>
 
-    <p class="lead text-center">Welcome To Blood Bank Management System
-      </p>
-    
-    <p class="text-center">- Available Features: Patient Login, Donor Login, Admin Login -</p>
-    
-  </div>
-  {% include "blood/footer.html" %}
+        <label>Recipient Blood Group:</label>
+        <select id="recipient">
+            <option value="">-- Select Recipient Blood Group --</option>
+            <option>A+</option><option>A-</option>
+            <option>B+</option><option>B-</option>
+            <option>AB+</option><option>AB-</option>
+            <option>O+</option><option>O-</option>
+        </select>
 
+        <button onclick="checkCompatibility()">Check</button>
+        <p id="result" style="margin-top:15px; text-align:center; font-weight:bold;"></p>
+    </div>
 
+    <!-- Section: Upcoming Campaigns -->
+    <section class="section" data-aos="fade-up">
+        <div class="container text-center">
+            <h2 class="section-title">🗓️ Upcoming Blood Donation Camps</h2>
+            <div class="d-flex flex-wrap justify-content-center">
+                <div class="camp-card">
+                    <p>📍 <strong>Pune</strong> - July 5, 2025</p>
+                    <p>🕙 10:00 AM to 4:00 PM</p>
+                </div>
+                <div class="camp-card">
+                    <p>📍 <strong>Mumbai</strong> - July 10, 2025</p>
+                    <p>🕘 9:00 AM to 3:00 PM</p>
+                </div>
+                <div class="camp-card">
+                    <p>📍 <strong>Nagpur</strong> - July 18, 2025</p>
+                    <p>🕒 11:00 AM to 5:00 PM</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section: Testimonials -->
+    <section class="section bg-light" data-aos="fade-up">
+        <div class="container text-center">
+            <h2 class="section-title">❤️ What Our Donors Say</h2>
+            <div class="d-flex flex-wrap justify-content-center">
+                <div class="testimonial-card">
+                    <p>“Donating blood was a life-changing experience. The platform made it easy!”</p>
+                    <h5>- Basavraj L.</h5>
+                </div>
+                <div class="testimonial-card">
+                    <p>“We found a matching donor within minutes. Truly amazing service.”</p>
+                    <h5>- Dr.Supriya, City Hospital</h5>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section: Past Campaigns Gallery -->
+    <section class="section" data-aos="fade-up">
+        <div class="container text-center">
+            <h2 class="section-title">📸 Our Past Donation Campaigns</h2>
+            <div class="d-flex flex-wrap justify-content-center">
+                <div class="m-2">
+                    <img src="{% static 'images/campaigns/camp1.jpg' %}" class="gallery-img" alt="Campaign 1">
+                </div>
+                <div class="m-2">
+                    <img src="{% static 'images/campaigns/camp2.jpg' %}" class="gallery-img" alt="Campaign 2">
+                </div>
+                <div class="m-2">
+                    <img src="{% static 'images/campaigns/camp3.jpg' %}" class="gallery-img" alt="Campaign 3">
+                </div>
+                <div class="m-2">
+                    <img src="{% static 'images/campaigns/camp4.jpg' %}" class="gallery-img" alt="Campaign 4">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% include "blood/footer.html" %}
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init();</script>
+
+    <script>
+        function checkCompatibility() {
+            const donor = document.getElementById('donor').value;
+            const recipient = document.getElementById('recipient').value;
+            const result = document.getElementById('result');
+
+            if (!donor || !recipient) {
+                result.style.color = 'red';
+                result.innerText = 'Please select both blood groups.';
+                return;
+            }
+
+            const compatible = {
+                "O-": ["O-", "O+", "A-", "A+", "B-", "B+", "AB-", "AB+"],
+                "O+": ["O+", "A+", "B+", "AB+"],
+                "A-": ["A-", "A+", "AB-", "AB+"],
+                "A+": ["A+", "AB+"],
+                "B-": ["B-", "B+", "AB-", "AB+"],
+                "B+": ["B+", "AB+"],
+                "AB-": ["AB-", "AB+"],
+                "AB+": ["AB+"]
+            };
+
+            if (compatible[donor] && compatible[donor].includes(recipient)) {
+                result.style.color = 'green';
+                result.innerText = "✅ Compatible!";
+            } else {
+                result.style.color = 'red';
+                result.innerText = "❌ Not Compatible!";
+            }
+        }
+    </script>
 </body>
-
 </html>

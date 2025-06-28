@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chatbot</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      .chat-container {
+        width: 400px;
+        padding: 20px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(38, 19, 19, 0.1);
+      }
+      .messages {
+        height: 300px;
+        overflow-y: scroll;
+        margin-bottom: 10px;
+      }
+      .input-container {
+        display: flex;
+      }
+      .input-container input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+      .input-container button {
+        padding: 10px;
+        background-color: #c32d22;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        margin-left: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="chat-container">
+      <div class="messages" id="messages">
+        <!-- Chat messages will appear here -->
+      </div>
+      <div class="input-container">
+        <input type="text" id="user-input" placeholder="Type your message..." />
+        <button onclick="sendMessage()">Send</button>
+      </div>
+    </div>
+
+    <script>
+      function sendMessage() {
+        var userInput = document.getElementById("user-input").value;
+        var messages = document.getElementById("messages");
+        var newMessage = document.createElement("div");
+        newMessage.textContent = "You: " + userInput;
+        messages.appendChild(newMessage);
+
+        // Clear input field
+        document.getElementById("user-input").value = "";
+
+        // Add bot response (this can be enhanced with an actual backend in the future)
+        var botMessage = document.createElement("div");
+        botMessage.textContent = "Bot: " + "I'm here to help!";
+        messages.appendChild(botMessage);
+      }
+    </script>
+  </body>
+</html>
